@@ -57,6 +57,26 @@ class DBStorage:
     def delete(self, obj=None):
         if obj:
             self.__session.delete(obj)
+    
+    def get(self, cls, id):
+        """
+        Returns the object based on the class and its ID,
+        or None if not found
+        """
+        key = f'{cls.__name__}.{id}'
+        objs = self.all(cls)
+        try:
+            return objs[key]
+        except KeyError:
+            return None
+    
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage matching the given class.
+        If no class is passed, returns the count of all objects in storage.
+        """
+        objs = self.all(cls)
+        return len(objs)
 
     def reload(self):
         Base.metadata.create_all(self.__engine)
