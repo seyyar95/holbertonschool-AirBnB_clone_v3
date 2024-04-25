@@ -16,7 +16,7 @@ def retrieve_all_states():
         json = request.get_json()
         if not json:
             abort(400, "Not a JSON")
-        if "name" not in json:
+        elif "name" not in json.keys():
             abort(400, "Missing name")
         state = State(**json)
         state.save()
