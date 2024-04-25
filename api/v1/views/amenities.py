@@ -29,7 +29,7 @@ def amenities():
     ], strict_slashes=False)
 def amenity_by_id(amenity_id):
     amenity = storage.get(Amenity, amenity_id)
-    if not amenity_id:
+    if not amenity:
         return jsonify({"error": "Not found"}), 404
     if request.method == 'GET':
         return jsonify(amenity.to_dict())
