@@ -16,12 +16,12 @@ def retrieve_all_states():
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates new state"""
-    json = request.get_json()
-    if not json:
-        abort(400, "Not a JSON")
-    elif "name" not in json.keys():
-        abort(400, "Missing name")
-    new_state = State(**json)
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"error": "Not a JSON"}), 400
+    if "name" not in data.keys():
+        return jsonify({"error": "Missing name"}), 400
+    new_state = State(**data)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 
@@ -37,7 +37,7 @@ def state(state_id):
     """
     state = storage.get(State, state_id)
     if not state:
-        abort(404)
+        return jsonify({"error": "Not found"}), 404
     else:
         if request.method == 'DELETE':
             storage.delete(state)
@@ -46,7 +46,7 @@ def state(state_id):
         elif request.method == 'PUT':
             json = request.get_json()
             if not json:
-                abort(400, description="Not a JSON")
+                return jsonify({"error": "Not a JSON"}), 400
             [setattr(
                 state, key, value
                 ) for key, value in json.items() if key not in [
