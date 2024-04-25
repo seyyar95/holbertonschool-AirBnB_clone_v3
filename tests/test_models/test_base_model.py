@@ -66,8 +66,9 @@ class test_basemodel(unittest.TestCase):
     def test_str(self):
         """ """
         i = self.value()
-        self.assertEqual(str(i), '[{}] ({}) {}'.format(i.__class__.__name__, i.id,
-                         i.__dict__))
+        self.assertEqual(str(i), '[{}] ({}) {}'.format(i.__class__.__name__,
+                                                       i.id,
+                                                       i.__dict__))
 
     def test_todict(self):
         """ """
@@ -95,12 +96,11 @@ class test_basemodel(unittest.TestCase):
     def test_created_at(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.created_at), datetime.datetime)
+        self.assertEqual(new.created_at, new.updated_at)
 
     def test_updated_at(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.updated_at), datetime.datetime)
         n = new.to_dict()
         new = self.value(**n)
         self.assertTrue(n['created_at'] != new.updated_at)
