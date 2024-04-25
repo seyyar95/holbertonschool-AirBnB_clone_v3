@@ -12,12 +12,12 @@ def retrieve_all_states():
     if request.method == 'GET':
         states = storage.all(State).values()
         return jsonify([state.to_dict() for state in states])
-    else:
+    elif request.method == 'POST':
         json = request.get_json()
         if not json:
-            abort(404, description="Not a JSON")
+            abort(400, "Not a JSON")
         if "name" not in json:
-            abort(400, description="Missing name")
+            abort(400, "Missing name")
         state = State(**json)
         state.save()
         return jsonify(state.to_dict()), 201
