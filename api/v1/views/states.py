@@ -6,21 +6,24 @@ from models.state import State
 from flask import jsonify, request, abort
 
 
-@app_views.route('/states', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def retrieve_all_states():
     """Retrieves the list of all States objects"""
-    if request.method == 'GET':
-        states = storage.all(State).values()
-        return jsonify([state.to_dict() for state in states])
-    elif request.method == 'POST':
-        json = request.get_json()
-        if not json:
-            abort(400, "Not a JSON")
-        elif "name" not in json.keys():
-            abort(400, "Missing name")
-        state = State(**json)
-        state.save()
-        return jsonify(state.to_dict()), 201
+    states = storage.all(State).values()
+    return jsonify([state.to_dict() for state in states])
+
+
+@app_views.route('/states', method=['POST'], strict_slashes=False)
+def create_state():
+    """Creates new state"""
+    json = request.get_json()
+    if not json:
+        abort(400, "Not a JSON")
+    elif "name" not in json.keys():
+        abort(400, "Missing name")
+    new_state = State(**json)
+    new_state.save()
+    return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=[
