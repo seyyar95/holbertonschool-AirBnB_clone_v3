@@ -6,7 +6,10 @@ from models.state import State
 from models.city import City
 from flask import jsonify, request
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'], strict_slashes=False)
+
+@app_views.route('/states/<state_id>/cities', methods=[
+    'GET', 'POST'
+    ], strict_slashes=False)
 def city(state_id):
     state = storage.get(State, state_id)
     if not state:
@@ -44,7 +47,7 @@ def city_by_id(city_id):
         if not data:
             return jsonify({"error": "Not a JSON"}), 400
         for key, value in data.items():
-            if key not in ["id", "state_id", "created_at","updated_at"]:
+            if key not in ["id", "state_id", "created_at", "updated_at"]:
                 setattr(city, key, value)
         storage.save()
         return jsonify(city.to_dict()), 200
