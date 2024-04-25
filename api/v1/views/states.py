@@ -13,7 +13,7 @@ def retrieve_all_states():
     return jsonify([state.to_dict() for state in states])
 
 
-@app_views.route('/states', method=['POST'], strict_slashes=False)
+@app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates new state"""
     json = request.get_json()
