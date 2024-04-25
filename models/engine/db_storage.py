@@ -57,7 +57,7 @@ class DBStorage:
     def delete(self, obj=None):
         if obj:
             self.__session.delete(obj)
-    
+
     def get(self, cls, id):
         """
         Returns the object based on the class and its ID,
@@ -69,7 +69,7 @@ class DBStorage:
             return objs[key]
         except KeyError:
             return None
-    
+
     def count(self, cls=None):
         """
         Returns the number of objects in storage matching the given class.
