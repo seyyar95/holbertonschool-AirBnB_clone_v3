@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 
+"""
+This module contains the Flask application for the AirBnB clone API.
+"""
+
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
