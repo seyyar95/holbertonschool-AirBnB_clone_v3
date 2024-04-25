@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+"""
+This module initializes the blueprint for the API views.
+
+The `app_views` blueprint is created with the name 'app_views' and the URL prefix '/api/v1'.
+It imports the views from the `index` module.
+"""
 from flask import Blueprint
 
 
