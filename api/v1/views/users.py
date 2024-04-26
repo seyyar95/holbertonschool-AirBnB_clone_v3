@@ -33,7 +33,7 @@ def user_by_id(user_id):
         return jsonify({"error": "Not found"}), 404
     if request.method == 'GET':
         return jsonify(user.to_dict())
-    if request.method == 'DELELTE':
+    if request.method == 'DELETE':
         storage.delete(user)
         storage.save()
         return jsonify({}), 200
