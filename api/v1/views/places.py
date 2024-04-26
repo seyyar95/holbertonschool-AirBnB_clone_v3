@@ -49,7 +49,7 @@ def place_by_id(place_id):
         storage.save()
         return jsonify({}), 200
     if request.method == 'PUT':
-        data = request.get_json(silent=True)
+        data = request.get_json(silent=False)
         if not data:
             return jsonify({"error": "Not a JSON"}), 400
         keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
