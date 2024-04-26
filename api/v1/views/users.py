@@ -9,7 +9,7 @@ from flask import jsonify, request
 @app_views.route('/users', methods=['GET', 'POST'], strict_slashes=False)
 def users():
     if request.method == 'GET':
-        users = storage.all(User)
+        users = storage.all(User).values()
         return jsonify([user.to_dict() for user in users])
     elif request.method == 'POST':
         data = request.get_json(silent=True)
