@@ -12,7 +12,7 @@ from flask import jsonify, request
     'GET', 'POST'
     ], strict_slashes=False)
 def places(city_id):
-    city = storage.get(City, city)
+    city = storage.get(City, city_id)
     if not city:
         return jsonify({"error": "Not found"}), 404
     if request.method == 'GET':
