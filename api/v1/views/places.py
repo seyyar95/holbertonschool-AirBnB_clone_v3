@@ -35,7 +35,9 @@ def places(city_id):
         return jsonify(place.to_dict()), 201
 
 
-@app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=[
+    'GET', 'DELETE', 'PUT'
+    ], strict_slashes=False)
 def place_by_id(place_id):
     place = storage.get(Place, place_id)
     if not place:
@@ -43,15 +45,16 @@ def place_by_id(place_id):
     if request.method == 'GET':
         return jsonify(place.to_dict())
     if request.method == 'DELETE':
-        storage.delete(place_id)
+        storage.delete(place)
         storage.save()
         return jsonify({}), 200
     if request.method == 'PUT':
         data = request.get_json(silent=True)
         if not data:
             return jsonify({"error": "Not a JSON"}), 400
+        keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
         for key, value in data.items():
-            if key not in ["id", "user_id", "city_id", "created_at", "updated_at"]:
+            if key not in keys:
                 setattr(place, key, value)
             storage.save()
             return jsonify(place.to_dict()), 200
