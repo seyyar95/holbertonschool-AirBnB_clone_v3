@@ -12,7 +12,7 @@ from models.user import User
     'GET', 'POST'
     ], strict_slashes=False)
 def reviews(place_id):
-    """Retrieves the list of all States objects"""
+    """GETs, POSTs Review objects"""
     place = storage.get(Place, place_id)
     if not place:
         return jsonify({"error": "Not found"}), 404
@@ -40,7 +40,7 @@ def reviews(place_id):
     'GET', 'PUT', 'DELETE'
     ], strict_slashes=False)
 def review_by_id(review_id):
-    """ABC"""
+    """GETting, PUTting, DELETing review object by id"""
     review = storage.get(Review, review_id)
     if not review:
         return jsonify({"error": "Not found"}), 404
