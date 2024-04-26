@@ -44,12 +44,12 @@ def place_by_id(place_id):
         return jsonify({"error": "Not found"}), 404
     if request.method == 'GET':
         return jsonify(place.to_dict())
-    if request.method == 'DELETE':
+    elif request.method == 'DELETE':
         storage.delete(place)
         storage.save()
         return jsonify({}), 200
-    if request.method == 'PUT':
-        data = request.get_json(silent=False)
+    elif request.method == 'PUT':
+        data = request.get_json(silent=True)
         if not data:
             return jsonify({"error": "Not a JSON"}), 400
         keys = ["id", "user_id", "city_id", "created_at", "updated_at"]
